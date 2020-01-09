@@ -1,0 +1,77 @@
+.game-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.camarilla {
+  background-image: url("./icons/camarilla.png");
+}
+
+/* CLANS */
+
+/* Player Clans */
+
+.brujah {
+  background-image: url("./icons/brujah.png");
+}
+
+.caitiff {
+  background-image: url("./icons/caitiff.png");
+}
+
+.gangrel {
+  background-image: url("./icons/gangrel.png");
+}
+
+.malkavian {
+  background-image: url("./icons/malkavian.png");
+}
+
+.nosferatu {
+  background-image: url("./icons/nosferatu.png");
+}
+
+.samedi {
+  background-image: url("./icons/samedi.png");
+}
+
+.toreador {
+  background-image: url("./icons/toreador.png");
+}
+
+.tremere {
+  background-image: url("./icons/tremere.png");
+}
+
+.ventrue {
+  background-image: url("./icons/ventrue.png");
+}
+
+
+/* Other / NPC Clans */
+
+/* Banu Haqim */
+.assamite {
+  background-image: url("./icons/assamite.png");
+}
+
+.giovanni {
+  background-image: url("./icons/giovanni.png");
+}
+
+.lasombra {
+  background-image: url("./icons/lasombra.png");
+}
+
+/* Followers of Set */
+.ministry {
+  background-image: url("./icons/ministry.png");
+}
+
+.ravnos {
+  background-image: url("./icons/ravnos.png");
+}
+
+.tzimisce {
+  background-image: url("./icons/tzimisce.png");
+}

@@ -1,0 +1,67 @@
+.characterSheet {
+  h1, h2, h3 h4, h5 {
+    //text-align: center;
+    padding: 6px;
+  }
+
+  .header {
+    display: flex;
+    margin-top: 16px;
+
+    h2 {
+      padding: 0;
+    }
+
+    button {
+      position: fixed;
+    }
+  }
+
+  .subsection {
+    padding: 1.2rem 0;
+  }
+
+  .attributes {
+    .dots {
+      padding-bottom: .5rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  .dots {
+    font-size: 1.3rem;
+    &.editable {
+      cursor: pointer;
+    }
+  }
+
+  .alignRight {
+    margin-left: auto;
+  }
+
+  .displayGroup {
+    display: flex;
+    label {
+      text-align: right;
+      display: inline-block;
+      padding: 7px;
+      width: 100px;
+      font-weight: bold;
+    }
+    input {
+      width: 400px;
+
+      &.form-control-plaintext {
+        padding: 6px 12px;
+        border: 1px solid transparent;
+        height: 38px;
+      }
+    }
+
+    &.changed {
+      input {
+        border: 2px solid darkslateblue;
+      }
+    }
+  }
+}

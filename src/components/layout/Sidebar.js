@@ -2,17 +2,23 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { useStore } from '../../contexts/store';
-
 import VampireIcon from '../VampireIcon/VampireIcon';
 
-export default function Sidebar( { className, toggleAddCharacter, isAddCharacter, selectedCharacter, selectCharacter } ) {
+const linkClass = 'button is-text';
+
+export default function Sidebar( { className, page, setPage, selectedCharacter, selectCharacter } ) {
   const classes = classNames( 'menu', className );
-  
+
   const { state } = useStore();
   const { characters } = state;
 
   const handleSelectCharacter = ( character ) => () => {
     selectCharacter( character );
+    setPage( 'character' );
+  };
+
+  const handleSetPage = ( newPage ) => () => {
+    setPage( newPage );
   };
 
   return (
@@ -25,35 +31,55 @@ export default function Sidebar( { className, toggleAddCharacter, isAddCharacter
           <CharacterLi
             character={character}
             isSelected={selectedCharacter && character._id === selectedCharacter._id}
+            key={`char-sidebar-${character._id}`}
             onClick={handleSelectCharacter( character )}
           />
         ) ) }
         <li>
           <button
-            disabled={isAddCharacter}
-            className="button"
-            onClick={toggleAddCharacter}
+            className="button is-primary"
+            disabled={page === 'add-character'}
+            onClick={handleSetPage( 'add-character' )}
           >
             Add a Character
           </button>
         </li>
       </ul>
+
       <p className="menu-label">
-        Administration
+        Tools
       </p>
       <ul className="menu-list">
-        <li>Team Settings</li>
         <li>
-          <span className="is-active">Manage Your Team</span>
-          <ul>
-            <li>Members</li>
-            <li>Plugins</li>
-            <li>Add a member</li>
-          </ul>
+          <button
+            className={linkClass}
+            onClick={handleSetPage( 'harpy' )}
+          >
+            Harpy Status Tracker
+          </button>
         </li>
-        <li>Invitations</li>
-        <li>Cloud Storage Environment Settings</li>
-        <li>Authentication</li>
+      </ul>
+
+      <p className="menu-label">
+        Admin
+      </p>
+      <ul className="menu-list">
+        <li>
+          <button
+            className={linkClass}
+            onClick={handleSetPage( 'admin-players' )}
+          >
+            Manage Players
+          </button>
+        </li>
+        <li>
+          <button
+            className={linkClass}
+            onClick={handleSetPage( 'admin-characters' )}
+          >
+            Manage Characters
+          </button>
+        </li>
       </ul>
     </aside>
   );
@@ -65,7 +91,10 @@ const CharacterLi = ( { character, isSelected, onClick } ) => {
 
   return (
     <li className={liClass} onClick={onClick}>
-      <VampireIcon clan={clan} /><div className="character-name">{name}</div>
+      <button className={linkClass}>
+        {/* <VampireIcon clan={clan} /> */}
+        <div className="character-name">{name}</div>
+      </button>
     </li>
   );
 }

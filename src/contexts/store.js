@@ -5,11 +5,13 @@ import {
 } from '../actions/characters';
 
 import {
-  SET_PLAYER
+  SET_PLAYER,
+  SET_PLAYERS,
 } from '../actions/players';
 
 
 const initialState = {
+  players: [],
   // TODO, remove mock data
   // player: undefined,
   player: {
@@ -42,6 +44,12 @@ export const StateProvider = ( { children } ) => {
         return {
           ...state,
           player: action.player
+        };
+      
+      case SET_PLAYERS:
+        return {
+          ...state,
+          players: action.players
         };
       
       case SET_CHARACTERS:

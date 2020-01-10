@@ -45,3 +45,10 @@ export function createPlayer( user ) {
     }
   } );
 }
+
+export function fetchPlayers() {
+  return sendRequest( {
+    method: "get",
+    url: "/players"
+  } );
+}

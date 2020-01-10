@@ -6,7 +6,6 @@ export const Auth0Context = createContext();
 
 export const useAuth0 = () => useContext( Auth0Context );
 
-// create a provider
 export class Auth0Provider extends Component {
   state = {
     auth0Client: null,
@@ -25,7 +24,6 @@ export class Auth0Provider extends Component {
     this.initializeAuth0();
   }
 
-  // initialize the auth0 library
   initializeAuth0 = async () => {
     const auth0Client = await createAuth0Client( this.config );
     this.setState( { auth0Client } );
@@ -41,7 +39,6 @@ export class Auth0Provider extends Component {
     this.setState( { isLoading: false, isAuth, user } );
   };
 
-  // handle the authentication callback
   handleRedirectCallback = async () => {
     this.setState( { isLoading: true } );
 

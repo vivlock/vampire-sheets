@@ -2,15 +2,19 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { useStore } from '../../contexts/store';
+import { useNav } from '../../contexts/nav';
+
 import VampireIcon from '../VampireIcon/VampireIcon';
 
 const linkClass = 'button is-text';
 
-export default function Sidebar( { className, page, setPage, selectedCharacter, selectCharacter } ) {
+export default function Sidebar( { className, selectedCharacter, selectCharacter } ) {
   const classes = classNames( 'menu', className );
 
   const { state } = useStore();
   const { characters } = state;
+  
+  const { page, setPage } = useNav();
 
   const handleSelectCharacter = ( character ) => () => {
     selectCharacter( character );

@@ -3,18 +3,44 @@ import React from 'react';
 import AddCharacter from '../Character/AddCharacter';
 import Character from '../Character/Character';
 
-export const PAGES = {
-  ADD_CHARACTER: 'add-character',
-  CHARACTER: 'character',
-  HARPY: 'harpy',
-  ADMIN_PLAYERS: 'admin-players',
-  ADMIN_CHARACTERS: 'admin-characters',
-  CHARACTER_SHEET: 'character-sheet'
-};
+import { PAGES, useNav } from '../../contexts/nav';
 
-export default function ViewPane( { className, page, setPage, selectedCharacter } ) {
+export default function ViewPane( { className, selectedCharacter } ) {
+  const { page } = useNav();
 
-  const content = getPageContent( page, selectedCharacter, setPage );
+  const getPageContent = () => {
+    switch( page ) {
+      case PAGES.ADD_CHARACTER:
+        return (
+          <AddCharacter />
+        );
+  
+      case PAGES.CHARACTER:
+        return selectedCharacter ? (
+          <Character character={selectedCharacter} />
+        ) : null;
+  
+      case PAGES.HARPY:
+        return (
+          <span>Harpy Status Tracker</span>
+        );
+  
+      case PAGES.ADMIN_PLAYERS:
+        return (
+          <span>Manage Players</span>
+        );
+  
+      case PAGES.ADMIN_CHARACTERS:
+        return (
+          <span>Manage Characters</span>
+        );
+  
+      default:
+        return null;
+    }
+  }
+
+  const content = getPageContent();
 
   return (
     <section className={className}>
@@ -25,36 +51,6 @@ export default function ViewPane( { className, page, setPage, selectedCharacter 
   )
 }
 
-function getPageContent( page, selectedCharacter, setPage ) {
-  switch( page ) {
-    case PAGES.ADD_CHARACTER:
-      return (
-        <AddCharacter setPage={setPage} />
-      );
 
-    case PAGES.CHARACTER:
-      return selectedCharacter ? (
-        <Character character={selectedCharacter} setPage={setPage} />
-      ) : null;
-
-    case PAGES.HARPY:
-      return (
-        <span>Harpy Status Tracker</span>
-      );
-
-    case PAGES.ADMIN_PLAYERS:
-      return (
-        <span>Manage Players</span>
-      );
-
-    case PAGES.ADMIN_CHARACTERS:
-      return (
-        <span>Manage Characters</span>
-      );
-
-    default:
-      return null;
-  }
-}
 
 

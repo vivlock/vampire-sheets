@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import AddCharacter from '../Character/AddCharacter';
 import Character from '../Character/Character';
 
 import { PAGES, useNav } from '../../contexts/nav';
 
-export default function ViewPane( { className, selectedCharacter } ) {
+function ViewPane( { className, selectedCharacter } ) {
   const { page } = useNav();
 
   const getPageContent = () => {
@@ -50,6 +51,16 @@ export default function ViewPane( { className, selectedCharacter } ) {
     </section>
   )
 }
+
+function mapStateToProps( { characters } ) {
+  const { selectedCharacter } = characters;
+
+  return {
+    selectedCharacter
+  };
+}
+
+export default connect( mapStateToProps )( ViewPane );
 
 
 

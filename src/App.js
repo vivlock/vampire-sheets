@@ -1,25 +1,24 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
 import { useAuth0 } from './contexts/auth0-context';
-import { useStore } from './contexts/store';
-
-import { setUpPlayerData } from './effects/players';
+import { setUpPlayerData } from './store/player/effects';
 
 import Header from './components/layout/Header';
 import Body from './components/layout/Body';
 
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'bulma/css/bulma.css';
+import "bulmaswatch/superhero/bulmaswatch.min.css";
 
-function App() {
+function App( { setUpPlayerData } ) {
   const { isAuth, user } = useAuth0();
-  const { dispatch } = useStore();
 
   useEffect( () => {
     if( isAuth && user ) {
-      setUpPlayerData( user, dispatch );
+      setUpPlayerData( user );
     }
-  }, [isAuth, user, dispatch] );
+  }, [isAuth, user, setUpPlayerData] );
 
   return (
     <>
@@ -29,4 +28,10 @@ function App() {
   );
 }
 
-export default App;
+function mapDispatchToProps( dispatch ) {
+  return {
+    setUpPlayerData: ( user ) => setUpPlayerData( user, dispatch )
+  }
+}
+
+export default connect( undefined, mapDispatchToProps )( App );

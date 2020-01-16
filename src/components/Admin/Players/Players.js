@@ -1,13 +1,10 @@
-import React from 'react';
-import { useStore } from '../../contexts/store';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import EditPlayer from './EditPlayer';
 
-export default function Players() {
-  const { state, dispatch } = useStore();
-  const { players } = state;
-
-  const [ editingPlayer, setEditingPlayer ] = useStore();
+function Players( { players } ) {
+  const [ editingPlayer, setEditingPlayer ] = useState();
 
   const editPlayer = ( player ) => {
     setEditingPlayer( player );
@@ -49,3 +46,17 @@ function PlayerRow( { player } ) {
     </tr>
   )
 }
+
+function mapStateToProps( { players } ) {
+  return {
+    players: Object.keys( players.byId ).map( ( id ) => players.byId[id] )
+  }
+}
+
+function mapDispatchToProps( dispatch ) {
+  return {
+    fetchPlayers: () => {}
+  }
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( Players );

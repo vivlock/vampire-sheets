@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-
 import Basics from "./Basics/Basics";
 import Attributes from "./Attributes/Attributes";
 import Skills from "./Skills/Skills";
@@ -127,27 +124,27 @@ export class CharacterSheet extends React.Component {
     console.log( "draft", draft );
 
     return (
-      <Container className="characterSheet">
+      <div className="container characterSheet">
         <div className="header">
           <h2>{characterSheet.name}</h2>
           <div className="alignRight">
             { isEditing ?
-              <Button onClick={this.handleSubmitClick}>Submit Changes</Button> :
-              <Button variant="link" onClick={this.toggleEditMode}>Edit</Button>
+              <button className='button' onClick={this.handleSubmitClick}>Submit Changes</button> :
+              <button className='button' variant="link" onClick={this.toggleEditMode}>Edit</button>
             }
           </div>
         </div>
         
-        <Container className="subsection">
+        <div className="subsection">
           <Basics 
             characterSheet={characterSheet}
             draft={draft}
             isEditing={isEditing}
             onChange={this.handleBasicsChange}
           />
-        </Container>
+        </div>
 
-        <Container className="subsection">
+        <div className="subsection">
           <h3>Attributes</h3>
           <Attributes 
             attributes={characterSheet.attributes}
@@ -155,9 +152,9 @@ export class CharacterSheet extends React.Component {
             isEditing={isEditing}
             onChange={this.handleAttributesChange}
           />
-        </Container>
+        </div>
 
-        <Container className="subsection">
+        <div className="subsection">
           <h3>Skills</h3>
           <Skills 
             skills={characterSheet.skills}
@@ -165,9 +162,9 @@ export class CharacterSheet extends React.Component {
             isEditing={isEditing}
             onChange={this.handleSkillsChange}
           />
-        </Container>
+        </div>
 
-        <Container className="subsection">
+        <div className="subsection">
           <h3>Backgrounds</h3>
           <Backgrounds 
             backgrounds={characterSheet.backgrounds}
@@ -175,9 +172,9 @@ export class CharacterSheet extends React.Component {
             isEditing={isEditing}
             onChange={this.handleBackgroundsChange}
           />
-        </Container>
+        </div>
 
-        <Container className="subsection">
+        <div className="subsection">
           <h3>Disciplines</h3>
           <Disciplines
             disciplines={characterSheet.disciplines}
@@ -185,9 +182,9 @@ export class CharacterSheet extends React.Component {
             isEditing={isEditing}
             onChange={this.handleDisciplinesChange}
           />
-        </Container>
+        </div>
         
-        <Container className="subsection">
+        <div className="subsection">
           <h3>Merits/Flaws</h3>
           <MeritsFlaws
             meritsFlaws={characterSheet.meritsFlaws}
@@ -195,8 +192,8 @@ export class CharacterSheet extends React.Component {
             isEditing={isEditing}
             onChange={this.handleMeritsFlawsChange}
           />
-        </Container>
-      </Container>
+        </div>
+      </div>
     );
   }
 }

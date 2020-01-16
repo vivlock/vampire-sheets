@@ -1,10 +1,5 @@
 import React from "react";
 
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import ListGroup from "react-bootstrap/ListGroup";
-
 import StatListItem from "../../StatList/StatListItem";
 
 import { putSkillsInBoxes, displayNames } from "./helper";
@@ -13,10 +8,9 @@ export default function Skills( { skills } ) {
   const skillsObj = putSkillsInBoxes( skills );
 
   return (
-    <Container className="skills">
-      <Row>
-        <Col>
-          <ListGroup>
+    <div className="skills">
+      <div className="container">
+        <div className="column">
             <Skill name="academics" skill={skillsObj["academics"]} />
             <Skill name="animalKen" skill={skillsObj["animalKen"]} />
             <Skill name="athletics" skill={skillsObj["athletics"]} />
@@ -34,10 +28,8 @@ export default function Skills( { skills } ) {
             }
             <Skill name="dodge" skill={skillsObj["dodge"]} />
             <Skill name="drive" skill={skillsObj["drive"]} />
-          </ListGroup>
-        </Col>
-        <Col>
-          <ListGroup>
+        </div>
+        <div className="column">
             <Skill name="empathy" skill={skillsObj["empathy"]} />
             <Skill name="firearms" skill={skillsObj["firearms"]} />
             <Skill name="intimidation" skill={skillsObj["intimidation"]} />
@@ -49,10 +41,8 @@ export default function Skills( { skills } ) {
             <Skill name="melee" skill={skillsObj["melee"]} />
             <Skill name="occult" skill={skillsObj["occult"]} />
             
-          </ListGroup>
-        </Col>
-        <Col>
-          <ListGroup>
+        </div>
+        <div className="column">
             { 
               skillsObj["performance"].length < 2 
               ? 
@@ -83,10 +73,9 @@ export default function Skills( { skills } ) {
                 ) )
               : null
             }
-          </ListGroup>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }
 

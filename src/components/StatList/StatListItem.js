@@ -1,16 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import ListGroup from "react-bootstrap/ListGroup";
-
 import Dots from "../Dots/Dots";
 
 export function StatListItem( { name, value, max } ) {
   return (
-    <ListGroup.Item>
+    <div>
       <div>{name}</div>
       <Dots value={value} max={max} keyName={`${name}`} />
-    </ListGroup.Item>
+    </div>
   )
 }
 

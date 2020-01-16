@@ -1,19 +1,18 @@
-import React, { useState, isValidElement } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
-import { useStore } from '../../contexts/store';
+import { useNav } from '../../contexts/nav';
+
 import { fetchClans } from '../../helpers/characterHelper';
-import { createCharacter } from '../../effects/characters';
+import { createCharacter } from '../../store/characters/effects';
 
 import './Character.css';
 
-export default function AddCharacter( { handleCancel } ) {
-  const { dispatch, state } = useStore();
-  const { player } = state;
+function AddCharacter( { player } ) {
+  const { setPage } = useNav();
 
   const [ character, setCharacter ] = useState( { player: player._id } );
-  const [ loadSpinner, setLoadSpinner ] = useState( false );
 
-  console.log("state", state);
   console.log("character", character);
 
   const clans = fetchClans( player.role );
@@ -26,14 +25,21 @@ export default function AddCharacter( { handleCancel } ) {
   }
 
   const handleSubmit = () => {
-    setLoadSpinner( true );
-    createCharacter( character )
+    // setLoadSpinner( true );
+    createCharacter( character, player )
+      .then( ( data ) => {
+        console.log('createCharacter callback', data);
+      } )
       .catch( ( error ) => {
         console.error( "Whoops, something borked", error );
       } )
       .finally( () => {
-        setLoadSpinner( false );
+        // setLoadSpinner( false );
       });
+  }
+
+  const handleCancel = () => {
+    setPage();
   }
 
   const isValid = () => {
@@ -149,3 +155,17 @@ function PlayerSelector( { player } ) {
     );
   }
 }
+
+function mapStateToProps( { activePlayer } ) {
+  return {
+    player: activePlayer.player
+  }
+}
+
+function mapDispatchToProps( dispatch ) {
+  return {
+    createCharacter: ( character, player ) => createCharacter( character, player, dispatch )
+  }
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( AddCharacter );

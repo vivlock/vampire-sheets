@@ -1,11 +1,10 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
 
 import DisplayGroup from "../../DisplayGroup/DisplayGroup";
 
 const Basics = ( { characterSheet, draft, isEditing, onChange } ) => {
   return (
-    <Form>
+    <div>
       <DisplayGroup 
         fieldName="player" label="Player" 
         isEditing={isEditing} onChange={onChange} 
@@ -26,7 +25,7 @@ const Basics = ( { characterSheet, draft, isEditing, onChange } ) => {
         isEditing={isEditing} onChange={onChange} 
         value={draft.archetype} pristine={characterSheet.archetype}
       />
-    </Form>
+    </div>
   );
 }
 

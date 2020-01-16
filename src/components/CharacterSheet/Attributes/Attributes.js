@@ -1,22 +1,18 @@
 import React from "react";
 
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-
 import Dots from "../../Dots/Dots";
 
 import { attributeNames, focusDisplayNames, displayNames } from "./helper";
 
 export const Attributes = ( { attributes } ) => {
   return (
-    <Container className="row attributes">
+    <div className="row attributes">
       {attributeNames.map( a => {
         return (
           <Attribute key={a} type={a} data={attributes[a]} />
         );
       } ) }
-    </Container>
+    </div>
   );
 }
 
@@ -24,11 +20,11 @@ export default Attributes;
 
 export const Attribute = ( { type, data } ) => {
   return (
-    <Col>
+    <div>
       <h4>{displayNames[type]}</h4>
       <Dots max={10} value={data.value} />
       <Foci type={type} data={data}></Foci>
-    </Col>
+    </div>
   );
 }
 
@@ -52,7 +48,8 @@ export const Foci = ( { type, data } ) => {
 
 export const Focus = ( { type, index, value } ) => {
   return (
-    <Form.Check inline label={focusDisplayNames[type][index]} type="checkbox" checked={value} readOnly />
+    null
+    // <Form.Check inline label={focusDisplayNames[type][index]} type="checkbox" checked={value} readOnly />
   );
 }
 

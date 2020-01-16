@@ -19,7 +19,7 @@ export function fetchCharactersForPlayer( player ) {
     method: "get",
     url: "/characters",
     params: {
-      q: `{"player": ${player._id}}`
+      q: `{"player": { "_id": "${player._id}" } }`
     }
   } );
 }

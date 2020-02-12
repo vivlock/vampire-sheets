@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { useNav } from '../../contexts/nav';
+import { FormGroup, Button, Intent } from "@blueprintjs/core";
 
+import Input from "../UI/FormControl/Input/Input";
+import Select from "../UI/FormControl/Select/Select";
+
+import { useNav } from '../../contexts/nav';
 import { fetchClans } from '../../helpers/characterHelper';
 import { createCharacter } from '../../store/characters/effects';
 
 import './Character.css';
 
-function AddCharacter( { player } ) {
+function AddCharacter( { player, players } ) {
   const { setPage } = useNav();
-
-  const [ character, setCharacter ] = useState( { player: player._id } );
-
-  console.log("character", character);
-
+  
   const clans = fetchClans( player.role );
+
+  const [ character, setCharacter ] = useState( {
+    player: { label: player.name, value: player._id }
+  } );
 
   const updateCharacter = ( field ) => ( event ) => {
     setCharacter( {
@@ -23,6 +27,15 @@ function AddCharacter( { player } ) {
       [field]: event.target.value
     } );
   }
+
+  const updateCharacterSelect = ( field ) => ( value ) => {
+    setCharacter( {
+      ...character,
+      [field]: value
+    } )
+  }
+  
+  console.log("character", character);
 
   const handleSubmit = () => {
     // setLoadSpinner( true );
@@ -51,114 +64,89 @@ function AddCharacter( { player } ) {
   }
 
   return (
-    <div className="container">
-      <div className="addCharacterForm">
-        <PlayerSelector
-          onChange={updateCharacter( 'player' )}
-          player={player}
-          value={character.player}
-        />
+    <div className="addCharacterForm">
+      <Select
+        disabled={player.role === 'player'}
+        isSearchable={player.role !== 'player'}
+        label="Player"
+        onChange={updateCharacterSelect( 'player' )}
+        options={players}
+        required
+        value={character.player}
+      />
 
-        <div className="field">
-          <label className="label">Character Name</label>
-          <div className="control">
-            <input
-              className="input"
-              type="text"
-              onChange={updateCharacter( 'name' )}
-              value={character.name}
-            />
-          </div>
-        </div>
+      <Input
+        inputId="name"
+        label="Character Name"
+        onChange={updateCharacter( 'name' )}
+        required
+        value={character.name}
+      />
 
-        <div className="field">
-          <label className="label">Clan</label>
-          <div className="control">
-            <div className="select">
-              <select
-                onChange={updateCharacter( 'clan' )}
-                value={character.clan}
-              >
-                <option value="">--Select--</option>
-                { clans.map( ( clan ) => (
-                  <option value={clan.value}>{clan.label}</option>
-                ) ) }
-              </select>
-            </div>
-          </div>
-        </div>
+      <Select
+        label="Clan"
+        onChange={updateCharacterSelect( 'clan' )}
+        options={clans}
+        required
+        value={character.clan}
+      />
 
-        <div className="field">
-          <label className="label">Title</label>
-          <div className="control">
-            <input
-              className="input"
-              onChange={updateCharacter( 'title' )}
-              type="text"
-              value={character.title}
-            />
-          </div>
-        </div>
+      <Input
+        inputId="title"
+        label="Title"
+        onChange={updateCharacter( 'title' )}
+        value={character.title}
+      />
 
-        <div className="field">
-          <label className="label">Archetype</label>
-          <div className="control">
-            <input
-              className="input"
-              onChange={updateCharacter( 'archetype' )}
-              type="text"
-              value={character.archetype}
-            />
-          </div>
-        </div>
+      <Input
+        inputId="archetype"
+        label="Archetype"
+        onChange={updateCharacter( 'archetype' )}
+        value={character.archetype}
+      />
 
-        <div className="field is-grouped">
-          <p className="control">
-            <button
-              className="button is-primary"
-              disabled={!isValid()}
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
-          </p>
-          <p className="control">
-            <button
-              className="button is-light"
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-          </p>
-        </div>
-      </div>
+      <FormGroup>
+        <Button
+          //disabled={!isValid()}
+          intent={Intent.PRIMARY}
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
+        <Button
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
+      </FormGroup>
     </div>
   )
 }
 
-function PlayerSelector( { player } ) {
-  if ( player.role === 'player' ) {
-    return (
-      <div className="field">
-        <label className="label">Player</label>
-        <div className="control">
-          <select disabled className="input">
-            <option value={player._id}>{player.name}</option>
-          </select>
-        </div>
-      </div>
-    ); 
+function buildPlayerOptions( player, players ) {
+  if( player.role === 'player' ) {
+    return [ {
+      label: player.name,
+      value: player._id
+    } ]
   }
-  else {
-    return (
-      <div>Special Searchable Select Box Thingo</div>
-    );
-  }
+
+  return Object.keys( players.byId ).map( ( id ) => {
+    return {
+      label: players[ id ].name,
+      value: id
+    };
+  } ).sort( ( a, b ) => {
+    return a.label.localeCompare( b.label );
+  } );
 }
 
-function mapStateToProps( { activePlayer } ) {
+function mapStateToProps( { activePlayer, players } ) {
+  const player = activePlayer.player;
+
   return {
-    player: activePlayer.player
+    player,
+    players: buildPlayerOptions( player, players )
   }
 }
 

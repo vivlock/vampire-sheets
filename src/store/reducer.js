@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import activePlayer from './player/reducer';
+import activePlayer from './activePlayer/reducer';
 import characters from './characters/reducer';
 import players from './players/reducer';
 

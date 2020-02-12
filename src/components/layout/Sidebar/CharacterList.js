@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
+
+import { Spinner, Menu } from "@blueprintjs/core";
 
 import { useNav } from '../../../contexts/nav';
-
 import { selectCharacter } from '../../../store/characters/actions';
-
-import VampireIcon from '../../VampireIcon/VampireIcon'
 
 function CharacterList( { characters, selectedCharacter, isLoading, onSelectCharacter } ) {
   const { page, setPage } = useNav();
@@ -20,57 +18,39 @@ function CharacterList( { characters, selectedCharacter, isLoading, onSelectChar
     setPage( 'character' );
   };
 
+  if( isLoading ) {
+    return (
+      <Spinner />
+    );
+  }
+
   return (
-    <div>
-      <p className="menu-label">
-        Characters
-      </p>
-      <ul className="menu-list character-list">
-        { characters.map( ( character ) => (
-          <CharacterLi
-            character={character}
-            isSelected={selectedCharacter && character._id === selectedCharacter._id}
-            key={`char-sidebar-${character._id}`}
-            onClick={handleSelectCharacter( character )}
-          />
-        ) ) }
-        <li className='add-character'>
-          <button
-            className="button is-primary"
-            disabled={page === 'add-character'}
-            onClick={handleSetPage( 'add-character' )}
-          >
-            Add a Character
-          </button>
-        </li>
-      </ul>
-    </div>
+    <>
+      <Menu.Divider title="Characters" />
+      { characters.map( ( character ) => (
+        <Menu.Item
+          active={selectedCharacter && character._id === selectedCharacter._id}
+          key={`char-sidebar-${character._id}`}
+          text={character.name}
+          onClick={handleSelectCharacter( character )}
+        />
+      ) ) }
+      <Menu.Item
+        text="Add a Character"
+        onClick={handleSetPage( 'add-character' )}
+        disabled={page === 'add-character'}
+      />
+    </>
   );
 }
 
-const CharacterLi = ( { character, isSelected, onClick } ) => {
-  const { name, clan } = character;
-
-  const liClass = classNames( { 'is-active': isSelected } );
-  const linkClass = 'button is-text';
-
-  return (
-    <li className={liClass} onClick={onClick}>
-      <button className={linkClass}>
-        {/* <VampireIcon clan={clan} /> */}
-        <div className="character-name">{name}</div>
-      </button>
-    </li>
-  );
-};
-
 function mapStateToProps( { characters } ) {
-  const { byId, selectedCharacter, isLoading } = characters;
+  const { byId, selectedCharacter, isCharacterListLoading } = characters;
 
   return {
     characters: Object.keys( byId ).map( id => byId[ id ] ),
     selectedCharacter,
-    isLoading
+    isLoading: isCharacterListLoading
   }
 }
 

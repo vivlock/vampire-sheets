@@ -4,6 +4,7 @@ import {
   SET_CHARACTERS,
   SELECT_CHARACTER,
   SET_CHARACTER_SHEETS_FOR_ID,
+  CHARACTER_LIST_LOADING,
 } from './actions';
 
 
@@ -40,6 +41,12 @@ export default ( state = initialState, action ) => {
           [action.id]: action.characterSheets
         }
       };
+
+    case CHARACTER_LIST_LOADING:
+      return {
+        ...state,
+        isCharacterListLoading: action.isLoading
+      }
     
     default:
       return state;

@@ -1,5 +1,6 @@
 import {
   SET_PLAYER,
+  PLAYER_IS_LOADING,
 } from './actions';
 
 // TODO: remove mock data
@@ -23,6 +24,12 @@ export default ( state = initialState, action ) => {
           ...state,
           player: action.player
         };
+      
+      case PLAYER_IS_LOADING:
+        return {
+          ...state,
+          isLoading: action.isLoading
+        }
       
       default:
         return state;

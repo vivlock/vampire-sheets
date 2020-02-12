@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import { Classes, Menu } from "@blueprintjs/core";
 
 import CharacterList from './CharacterList';
 
@@ -8,9 +8,6 @@ import { useNav } from '../../../contexts/nav';
 import './Sidebar.css';
 
 export default function Sidebar( { className } ) {
-  const classes = classNames( 'menu', className );
-  const linkClass = 'button is-text';
-
   const { page, setPage } = useNav();
 
   const handleSetPage = ( newPage ) => () => {
@@ -18,45 +15,25 @@ export default function Sidebar( { className } ) {
   };
 
   return (
-    <aside className={classes}>
+    <Menu className="sidebar">
       <CharacterList />
 
-      <p className="menu-label">
-        Tools
-      </p>
-      <ul className="menu-list">
-        <li>
-          <button
-            className={linkClass}
-            onClick={handleSetPage( 'harpy' )}
-          >
-            Harpy Status Tracker
-          </button>
-        </li>
-      </ul>
+      <Menu.Divider title="Tools" />
+      <Menu.Item
+        text="Harpy Status Tracker"
+        onClick={handleSetPage( 'harpy' )}
+      />
 
-      <p className="menu-label">
-        Admin
-      </p>
-      <ul className="menu-list">
-        <li>
-          <button
-            className={linkClass}
-            onClick={handleSetPage( 'admin-players' )}
-          >
-            Manage Players
-          </button>
-        </li>
-        <li>
-          <button
-            className={linkClass}
-            onClick={handleSetPage( 'admin-characters' )}
-          >
-            Manage Characters
-          </button>
-        </li>
-      </ul>
-    </aside>
+      <Menu.Divider title="Admin" />
+      <Menu.Item
+        text="Manage Players"
+        onClick={handleSetPage( 'admin-players' )}
+      />
+      <Menu.Item
+        text="Manage Characters"
+        onClick={handleSetPage( 'admin-characters' )}
+      />
+    </Menu>
   );
 }
 
